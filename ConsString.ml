@@ -19,9 +19,46 @@ struct
     let add_char c c_s = Cons(c, c_s)
     in fold_left add_char c_s Nil
                                                  
-  let rec cons_string_concat a b =
+  let cons_string_concat a b =
     let add_char c c_s = Cons(c, c_s)
     in fold_left add_char (rev a) b
-    
+
+  let length c_s =
+    let rec length_worker c_s acc =
+      match c_s with
+      |Nil -> acc
+      |Cons(c, t) -> length_worker t (acc+1)
+    in length_worker c_s 0
+
+    let rec contains ch c_s =
+      match c_s with
+      |Nil -> false
+      |Cons(c, t) -> if c = ch then true else contains ch t
+
+   (* let contains c_s ch =
+      let is_eq_acc a b = (a = ch) || b
+      in fold_left is_eq_acc c_s false
+      This implementation of contains is more fun but not as good as the simple pattern matching one below*)
+      
+      (* is_eq_acc type signature - char -> bool -> bool
+      a : char, b : bool and ch : char (ch is provided in the outer 'contains' function)
+      is_eq_acc compares a with ch and takes that boolean value OR the boolean value of b.
+      If (a = ch) ever evaluates to true, the accumulator of fold_left will remain true forever due to the OR ( || ) comparison
+      Unfortunately, this implementation will always search through the entire c_s as there is no break
+      up finding a match*)
+
+    let rec contains c_s ch =
+      match c_s with
+      |Nil -> false
+      |Cons(c, t) -> if c = ch then true else contains t c_s
+    (* Better implementation of contains as it stops when the first case of (c = ch) is found *)
+
+    let contains_count c_s ch =
+      let is_eq_inc a b =
+        if a = ch then (b+1) else b
+      in fold_left is_eq_inc c_s 0
+      (* Got to use fold_left within contains *)
+      (* counts the number of times a cons_string (c_s) contains a given char ch *)
+  
 end
 ;;
