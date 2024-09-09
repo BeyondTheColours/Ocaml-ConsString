@@ -19,7 +19,7 @@ struct
     let add_char c c_s = Cons(c, c_s)
     in fold_left add_char c_s Nil
                                                  
-  let cons_string_concat a b =
+  let concat a b =
     let add_char c c_s = Cons(c, c_s)
     in fold_left add_char (rev a) b
 
