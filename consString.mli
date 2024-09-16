@@ -1,4 +1,3 @@
-
 type t
 
 val fold_left : (char -> 'a -> 'a) -> t -> 'a -> 'a
@@ -15,6 +14,7 @@ val length : t -> int
 
 val contains : t -> char -> bool
 
-val contains_count : t -> char -> int
+val count : t -> char -> int
 
+val op_count : t -> char -> int option
 ;;
